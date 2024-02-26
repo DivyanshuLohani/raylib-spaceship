@@ -1,24 +1,23 @@
 #include <raylib.h>
-#include "ball.h"
+#include "spaceship.h"
+#include "lazer.h"
 
 int main()
 {
-    Color darkGreen = Color{20, 160, 133, 255};
-
     const int screenWidth = 800;
     const int screenHeight = 600;
+    Color background = {17, 14, 26, 255};
 
-    Ball ball = Ball();
-
-    InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
+    InitWindow(screenWidth, screenHeight, "Spaceship");
     SetTargetFPS(60);
+
+    Spaceship spaceship;
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(darkGreen);
-        ball.Update();
-        ball.Draw();
+        ClearBackground(background);
+        spaceship.Draw();
         EndDrawing();
     }
 
