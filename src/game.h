@@ -24,6 +24,7 @@ private:
 
     double m_alienLazerFireTime = 0.0f;
 
+    void Init();
     void CreateAliens();
 
     void UpdateLazers();

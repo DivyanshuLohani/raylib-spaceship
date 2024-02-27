@@ -10,10 +10,22 @@ std::string FormatWithLeadingZeros(int number, int width)
 
 Game::Game()
 {
-    CreateAliens();
     m_Font = LoadFontEx("Fonts/game.ttf", 64, 0, 0);
     m_explosionSound = LoadSound("Audio/explosion.wav");
+
+    Init();
+}
+
+void Game::Init()
+{
+    m_alien_lazers.clear();
+    m_aliens.clear();
+    CreateAliens();
     m_lives = 3;
+    m_run = true;
+    m_alienDirection = 1;
+    m_alienLazerFireTime = 0.0f;
+    m_score = 0;
 }
 
 void Game::Draw()
@@ -51,9 +63,19 @@ void Game::DrawUI()
     DrawLineEx({10, 730}, {740, 730}, 3, YELLOW);
 
     if (m_run)
+    {
         DrawTextEx(m_Font, "LEVEL 01", {570, 740}, 34, 2, YELLOW);
+    }
     else
+    {
         DrawTextEx(m_Font, "GAME OVER", {570, 740}, 34, 2, YELLOW);
+        Vector2 f_size = MeasureTextEx(m_Font, "R to Restart", 64, 2);
+        DrawTextEx(m_Font, "R to Restart", {
+                                               ((int)GetScreenWidth() - f_size.x) / 2,
+                                               ((int)GetScreenHeight() - f_size.y) / 2,
+                                           },
+                   34, 2, YELLOW);
+    }
 
     // Spaceships
     float x = 50.0;
@@ -78,7 +100,13 @@ void Game::Update()
     UpdateLazers();
 
     if (!m_run)
+    {
+        if (IsKeyPressed(KEY_R))
+        {
+            Init();
+        }
         return;
+    }
 
     m_player.Update();
     MoveAliens();
