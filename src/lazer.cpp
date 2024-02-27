@@ -4,6 +4,7 @@ Lazer::Lazer(Vector2 position, int speed)
 {
     m_position = position;
     m_speed = speed;
+    m_active = true;
 }
 
 Lazer::~Lazer()
@@ -17,5 +18,13 @@ void Lazer::Draw()
 
 void Lazer::Update()
 {
-    m_position.y -= m_speed;
+    if (m_active)
+        m_position.y -= m_speed;
+    else
+        return;
+
+    if (m_position.y < 0)
+    {
+        m_active = false;
+    }
 }

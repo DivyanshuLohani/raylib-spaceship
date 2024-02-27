@@ -1,23 +1,24 @@
 #include <raylib.h>
-#include "spaceship.h"
-#include "lazer.h"
-
+#include "game.h"
+#include "enemy.h"
 int main()
 {
-    const int screenWidth = 800;
-    const int screenHeight = 600;
+    const int screenWidth = 750;
+    const int screenHeight = 800;
     Color background = {17, 14, 26, 255};
 
     InitWindow(screenWidth, screenHeight, "Spaceship");
+    InitAudioDevice();
     SetTargetFPS(60);
 
-    Spaceship spaceship;
+    Game game;
 
     while (!WindowShouldClose())
     {
+        game.Update();
         BeginDrawing();
         ClearBackground(background);
-        spaceship.Draw();
+        game.Draw();
         EndDrawing();
     }
 
